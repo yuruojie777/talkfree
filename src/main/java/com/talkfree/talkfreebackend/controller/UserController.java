@@ -6,12 +6,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @RestController
 @Validated
 @RequestMapping("/user")
+@CrossOrigin
 public class UserController {
 
     @Resource
@@ -19,7 +20,12 @@ public class UserController {
 
     @GetMapping
     public User getUser(@RequestParam String userId){
-        return userServiceImpl.getUser(userId);
+        return userServiceImpl.getUserById(userId);
+    }
+
+    @GetMapping("/all")
+    public List<User> getUserList() {
+        return userServiceImpl.getUserList();
     }
 
     @PostMapping
@@ -28,9 +34,17 @@ public class UserController {
         return "Success";
     }
 
-//    @GetMapping
-//    public User getUserList(@RequestParam String userName, HttpServletRequest request) {
-//        request.getSession().
-//    }
+    @DeleteMapping
+    public String deleteUser(@RequestParam String userId) {
+        System.out.println("Deleting userId: " + userId + "...");
+        if(userServiceImpl.deleteUser(userId) != null) return "Success";
+        else return "Failed";
+    }
+
+    @DeleteMapping("/all")
+    public String deleteAllUser() {
+        if(userServiceImpl.deleteUserList() > 0) return "Success";
+        else return "Failed";
+    }
 
 }

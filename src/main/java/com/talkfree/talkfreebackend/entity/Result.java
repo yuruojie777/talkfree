@@ -1,11 +1,13 @@
 package com.talkfree.talkfreebackend.entity;
 
-public class Error {
+public class Result {
 
     private String message;
+    private int stateCode;
 
-    public Error(String message) {
+    public Result(String message, int stateCode) {
         this.message = message;
+        this.stateCode = stateCode;
     }
 
     public String getMessage() {
@@ -16,10 +18,19 @@ public class Error {
         this.message = message;
     }
 
+    public int getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(int stateCode) {
+        this.stateCode = stateCode;
+    }
+
     @Override
     public String toString() {
         return "Error{" +
                 "message='" + message + '\'' +
+                ", stateCode=" + stateCode +
                 '}';
     }
 }

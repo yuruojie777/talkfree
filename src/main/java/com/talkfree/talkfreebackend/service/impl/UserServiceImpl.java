@@ -38,15 +38,29 @@ public class UserServiceImpl implements UserService {
     RedisTemplate<String, String> template;
 
     @Override
-    public User getUser(String userId) {
+    public User getUserById(String userId) {
 
-        User user = userRepository.findUserByName(userId);
+        User user = userRepository.findUserById(userId);
         return user;
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        User user = userRepository.findUserByEmail(email);
+        return user;
+    }
+
+    @Override
+    public List<User> getUserByName(String userName) {
+        List<User> userList = userRepository.findUserByName(userName);
+        return userList;
+    }
+
+    @Override
     public List<User> getUserList() {
-        return null;
+        List<User> userList = userRepository.findAll();
+        System.out.println("The number of the user is "+userList.size());
+        return userList;
     }
 
     @Override
@@ -68,12 +82,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int deleteUer() {
-        return 0;
+    public User deleteUser(String Id) {
+        return userRepository.deleteUserById(Id);
     }
 
     @Override
     public int deleteUserList() {
+
+        try{
+            userRepository.deleteAll();
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 }
